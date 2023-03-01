@@ -1,6 +1,6 @@
 'use strict';
 
-const eventPool = require('./event-pool');
+const eventPool = require('../eventPool');
 
 eventPool.on('pickup', (payload) => {
   setTimeout(() => {

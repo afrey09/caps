@@ -3,17 +3,19 @@
 const eventPool = require('../eventPool');
 var Chance = require('chance');
 var chance = new Chance();
+const { createPackage, thankDriver } = require('./handler');
 
+eventPool.on('delivery', confirmDelivery);
+
+//responds by logging a message to the console:
+function confirmDelivery() {
+  setTimeout(() => {
+    thankDriver();
+  }, 1000);
+}
+
+//gets event cycle started
 
 setInterval(() => {
-
-  const payload = {
-    store:store,
-    orderID:chance.guid(),
-    customer:chance.name(),
-    address:chance.address(),
-  };
-  eventPool.emit('pickup', payload);
+  createPackage();
 }, 5000);
-
-eventPool.on('delivered', (payload) => console.log('has been delievered'))

@@ -1,30 +1,19 @@
 'use strict';
 
 let eventPool = require('./eventPool.js');
+require('./vendor');
+require('./driver');
 var Chance = require('chance');
 var chance = new Chance();
 
-//handlers
-const driverHandler = require('./driver/index');
-const vendorHandler = require('./vendor/index');
 
+//listeners for all events
+eventPool.on('pickup', (payload) => logger('pickup', payload));
+eventPool.on('in-transit', (payload) => logger('in-transit', payload));
+eventPool.on('delivered', (payload) => logger('delivered', payload));
 
-//listens to all events
-eventPool.on('pickup', driverHandler);
-eventPool.on('in-transit', driverHandler);
-eventPool.on('delivered', driverHandler);
-eventPool.on('pick-up', vendorHandler);
-eventPool.on('delivered', vendorHandler);
+function logger(event, payload) {
+  const timeStamp= new Date();
 
-setInterval(() => {
-  console.log('--------new interval begins-------');
-});
-
-const start = () => {
-  setInterval(() => {
-    let store = chance.company();
-    eventPool.emit('VENDOR', store);
-  }, 1000);
-};
-
-start();
+  console.log(`EVENT`, {event, timeStamp, payload});
+}
