@@ -1,7 +1,7 @@
 'use strict';
 
 let eventPool = require('./eventPool.js');
-require('./vendor');
+require('./clients/vendor');
 require('./clients/driver');
 var Chance = require('chance');
 var chance = new Chance();

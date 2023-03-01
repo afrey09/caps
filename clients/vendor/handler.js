@@ -1,7 +1,7 @@
 'use strict';
 //vendor
 
-const eventPool = require('../eventPool');
+const eventPool = require('../../eventPool');
 let Chance = require('chance');
 let chance = new Chance();
 
