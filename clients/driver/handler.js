@@ -1,7 +1,10 @@
 'use strict';
 //driver
 
-const eventPool = require('./eventPool');
+//const eventPool = require('./eventPool');
+const { io } = require('socket.io-client');
+
+const socket = io('http://localhost:3001/caps');
 
 //listens for pickup event from the Global Event Pool and responds with the following:
 eventPool.on('pickup', pickupAndDeliver);
