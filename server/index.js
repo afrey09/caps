@@ -14,22 +14,23 @@ caps.on('connection', (socket) => {
   console.log('Socket connected', socket.id);
   socket.onAny(event, payload) => {
     const time = new Date();
-    console.log('Event received', {event, payload, time});
+    console.log('Event received', { event, payload, time });
   }
-  
-// manage Pickup event
-socket.on('pickup', (payload) => {
-  socket.broadcast.emit('pickup',payload);
+
+  // manage Pickup event
+  socket.on('pickup', (payload) => {
+    socket.broadcast.emit('pickup', payload);
+  });
+
+  // manage In-Transit event
+  socket.on('in-transit', (payload) => {
+    socket.broadcast.emit('in-transit', payload);
+  });
+
+  // manage Delivered event
+  socket.on('delivered', (payload) => {
+    socket.broadcast.emit('delivered', payload);
+
+  });
 });
-
-// manage In-Transit event
-socket.on('in-transit', (payload) => {
-  socket.broadcast.emit('in-transit',payload);
-});
-
-// manage Delivered event
-socket.on('delivered', (payload) => {
-  socket.broadcast.emit('delivered',payload);
-
-
 server.listen(PORT);

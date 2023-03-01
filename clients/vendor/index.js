@@ -7,14 +7,14 @@
 // const chance = new Chance();
 const { io } = require('socket.io-client');
 //const eventPool = require('../../eventPool');
-const { createPackage } = require('./handler');
+const { createPackage, thankDriver } = require('./handler');
 
 const socket = io.connect('http://localhost:3000/caps');
 
 //eventPool.on('delivery', confirmDelivery);
 
 socket.on('delivered', (payload) => {
-  console.log('Thanks for delivering the package to:', payload.customer)
+ thankDriver(payload);
 });
 
 

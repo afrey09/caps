@@ -9,11 +9,15 @@ const socket = io.connect('http://localhost:3000');
 //const eventPool = require('../../eventPool');
 
 socket.on('pickup', (payload) => {
+  
   setTimeout(() => {
+   
     console.log('driver: package picked up');
     socket.emit('in-transit', payload);
   }, 1000);
+  
   setTimeout(() => {
+    
     console.log('driver:package delivered');
     socket.emit('delivered', payload);
   }, 2000);
