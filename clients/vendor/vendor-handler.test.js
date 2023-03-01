@@ -1,9 +1,9 @@
 'use strict';
 
-const eventPool = require('.eventPool');
+const socket = require('.socket');
 const { createPackage, thankDriver } = require('./handler');
 
-jest.mock('./eventPool', () => {
+jest.mock('./socket', () => {
   return {
     on: jest.fn(),
     emit: jest.fn(),
@@ -12,19 +12,17 @@ jest.mock('./eventPool', () => {
 console.log = jest.fn();
 
 describe('vendor', () => {
-  it('emits an order as expected', () => {
-    let payload = {
-      store: '1-206-flowers',
+  let payload = {
+    store: '1-206-flowers',
     orderID: chance.guid(),
     customer: chance.name(),
     address: chance.address(),
-};
-createPackage(payload);
-expect(console.log).toHaveBeenCalledWith('vendor: we have an order ready');
-expect(eventPool.emit).toHaveBeenCalledWith('pickup', payload);
+  };
+  createPackage(payload);
+  expect(console.log).toHaveBeenCalledWith('vendor: we have an order ready');
+  expect(socket.emit).toHaveBeenCalledWith('pickup', payload);
 });
 it('thanks driver', () => {
   thankDriver();
-  expect(console.log).toHaveBeenCalledWith('thank you for ordering');
-});
+  expect(console.log).toHaveBeenCalledWith('thank you for ordering', payload.customer);
 });
