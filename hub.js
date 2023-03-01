@@ -2,7 +2,7 @@
 
 let eventPool = require('./eventPool.js');
 require('./vendor');
-require('./driver');
+require('./clients/driver');
 var Chance = require('chance');
 var chance = new Chance();
 
