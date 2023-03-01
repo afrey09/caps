@@ -5,8 +5,6 @@ const eventPool = require('../eventPool');
 let Chance = require('chance');
 let chance = new Chance();
 
-// listens for delivered event
-eventPool.on('Delivery', confirmDelivery);
 
 function createPackage(payload=null) {
   if(!payload) {
@@ -18,7 +16,7 @@ function createPackage(payload=null) {
   };
 }
 //not required but helpful for debugging
-  console.log('vendor: we have an order ready');
+  //console.log('vendor: we have an order ready');
   eventPool.emit('pickup', payload);
 }
 
@@ -30,7 +28,6 @@ function thankDriver() {
 
 module.exports = {
 createPackage,
-confirmDelivery,
 thankDriver,
 };
 

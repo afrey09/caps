@@ -2,6 +2,6 @@
 
 const Event = require('events');
 
-const eventPool = require('./eventPool');
+const eventPool = new Event();
 
 module.exports = eventPool;
