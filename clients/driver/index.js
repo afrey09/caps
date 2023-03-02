@@ -5,8 +5,8 @@
 // As a driver, I want to alert the system when a package has been delivered.
 
 const { io } = require('socket.io-client');
-const socket = io.connect('http://localhost:3000');
-//const eventPool = require('../../eventPool');
+const socket = io.connect('http://localhost:3001/caps');
+
 
 socket.on('pickup', (payload) => {
   
@@ -22,15 +22,3 @@ socket.on('pickup', (payload) => {
     socket.emit('delivered', payload);
   }, 2000);
 });
-
-
-// eventPool.on('pickup', (payload) => {
-//   setTimeout(() => {
-//     console.log('in-transit');
-//     eventPool.emit('in-transit', payload);
-//   }, 1000);
-//   setTimeout(() => {
-//     console.log('delivered');
-//     eventPool.emit('delivered', payload);
-//   }, 3000);
-// });
