@@ -3,6 +3,8 @@
 require('dotenv').config();
 const { Server } = require('socket.io');
 const PORT = process.env.PORT || 3002;
+const Queue = require('./lib/queue');
+const eventQueue = new Queue();
 
 // socket server singleton: listening for events at localhost:3001
 const server = new Server();
