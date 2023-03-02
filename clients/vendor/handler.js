@@ -1,33 +1,30 @@
 'use strict';
 //vendor
 
-const eventPool = require('../../eventPool');
+//const eventPool = require('../../eventPool');
 let Chance = require('chance');
 let chance = new Chance();
 
 
-function createPackage(payload=null) {
-  if(!payload) {
-  let payload = {
-    store: '1-206-flowers',
-    orderID: chance.guid(),
-    customer: chance.name(),
-    address: chance.address(),
+
+const createPackage = (socket, payload = null) => {
+  if (!payload) {
+    payload = {
+      store: '1-206-flowers',
+      orderID: chance.guid(),
+      customer: chance.name(),
+      address: chance.address(),
+    }
   };
-}
-//not required but helpful for debugging
-  //console.log('vendor: we have an order ready');
-  eventPool.emit('pickup', payload);
-}
-
-function thankDriver() {
-
-  console.log('thank you for ordering');
-}
-
-
-module.exports = {
-createPackage,
-thankDriver,
+  console.log('vendor: order ready for pickup');
+  socket.emit('pickup', payload);
 };
+
+
+const thankDriver = (payload) => {
+  console.log('Thank you for deliverying the package to', payload.customer);
+
+};
+
+module.exports = { createPackage, thankDriver };
 

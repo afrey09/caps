@@ -1,21 +1,18 @@
 'use strict';
 
-const eventPool = require('../../eventPool');
-var Chance = require('chance');
-var chance = new Chance();
+// As a vendor, I want to alert the system when I have a package to be picked up.
+// As a vendor, I want to be notified when my package has been delivered.
+
+const { io } = require('socket.io-client');
 const { createPackage, thankDriver } = require('./handler');
+const socket = io.connect('http://localhost:3001/caps');
 
-eventPool.on('delivery', confirmDelivery);
 
-//responds by logging a message to the console:
-function confirmDelivery() {
-  setTimeout(() => {
-    thankDriver();
-  }, 1000);
-}
+socket.on('delivered', (payload) => {
+  thankDriver(payload);
+});
 
-//gets event cycle started
 
 setInterval(() => {
-  createPackage();
+  createPackage(socket);
 }, 5000);
