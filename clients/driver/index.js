@@ -17,8 +17,12 @@ socket.on('pickup', (payload) => {
   }, 1000);
   
   setTimeout(() => {
-    
+    const order = {
+      queueType: 'driver',
+      payload,
+    };
+
     console.log('driver:package delivered');
-    socket.emit('delivered', payload);
+    socket.emit('delivered', order);
   }, 2000);
 });
