@@ -28,11 +28,11 @@ caps.on('connection', (socket) => {
     
     let driverQueue = capsQueue.read('driver');
     if(!driverQueue) {
-      let driverKey = capsQueue.read('driver', new Queue());
+      let driverKey = capsQueue.store('driver', new Queue());
       driverQueue = capsQueue.read(driverKey);
     }
     driverQueue.store(payload.messageId, payload);
-    
+
     socket.broadcast.emit('pickup', payload);
   });
 
@@ -43,6 +43,15 @@ caps.on('connection', (socket) => {
 
   // manage Delivered event
   socket.on('delivered', (payload) => {
+    
+    let storeQueue = capsQueue.read(payload.queueType);
+    if(!storeQueue) {
+      let driverKey = capsQueue.read(payload.queueType, new Queue());
+      storeQueue = capsQueue.read(driverKey);
+    }
+    storeQueue.store(payload.messageId, payload);
+    
+    
     socket.to(payload.queueId).emit('delivered', payload);
 
   });
