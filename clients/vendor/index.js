@@ -6,6 +6,7 @@
 const { io } = require('socket.io-client');
 const { createPackage, thankDriver } = require('./handler');
 const socket = io.connect('http://localhost:3001/caps');
+const store = '1-206-flowers';
 
 
 socket.on('delivered', (payload) => {
